@@ -2,7 +2,7 @@ import React from 'react';
 import Menu from './Menu'
 import './MenuList.css';
 
-let number = [1,2,3,4,5,6,7,8,9];
+let number = ['a1','a2','a3','a4','a5','a6','a7','a8','a9'];
 let urlx;
 const MenuList = ({onCreate}) => {
     const menuList = number.map(
