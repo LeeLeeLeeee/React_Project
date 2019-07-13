@@ -7,7 +7,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    onCreate:(idx) => dispatch(actions.create(idx))
+    onCreate:(idx) => dispatch(actions.create(idx)),
+    onOrder:() => dispatch(actions.orderMenu())
 })
 
 const MenuListContainer = connect(

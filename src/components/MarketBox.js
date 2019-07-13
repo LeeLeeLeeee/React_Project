@@ -3,39 +3,32 @@ import './MarketBox.css';
 import MarketBoxItem from './MarketBoxItem'
 
 
-const MarketBox = ({ onIncrement, onDecrement, menuList }) => {
+const MarketBox = ({ onIncrement, onDecrement, menuList,onDelete }) => {
     let menuListJSX = '';
     let Arrays = [];
+    console.log(menuList)
     let menuListJson = menuList.toJS();
-    for (let obj in menuListJson) {
-        Arrays.push(
-            <MarketBoxItem
-                    idx = {obj}
-                    count = {menuListJson[obj]['count']}
-                />
-            );
-    }
-    menuListJSX = Arrays;
-    console.log(menuListJSX);
+
     if (menuList.size === 0) {
         menuListJSX = 'Nothing';
     } else {
-        // menuListJSX = menuList.map(
-        //     (menu, i) => (
-        //         'b'
-        //     )
-        // )
+        for (let obj in menuListJson) {
+            Arrays.push(
+                <MarketBoxItem
+                        idx = {obj}
+                        count = {menuListJson[obj]['count']}
+                        onIncrement = {onIncrement}
+                        onDecrement = {onDecrement}
+                        onDelete = {onDelete}
+                    />
+                );
+        }
+        menuListJSX = Arrays;
 
     }
 
 
-    //console.log(menuListJSX._root);
-    /*
-<MarketBoxItem
-                    idx = {i}
-                    count = {menu.toJS().count}
-                />
-                */
+    
     return (
         <div>
             {menuListJSX}

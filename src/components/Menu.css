@@ -1,8 +1,44 @@
 .Menus {
     cursor: pointer;
     display: inline-block;
+    position: relative;
     margin:5px;
 }
-.Menus:hover {
-    opacity: 0.85;
+.Menus:before{
+    content:'메뉴';
+    z-index: 99;
+    position :absolute;
+    top:10px;
+    left:20px;
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+    display: none
+    
 }
+.App {
+    text-align: center
+}
+.menuImage {
+    width:100%;
+    height: 100%
+}
+.Menus:hover {
+    opacity: 0.6;
+}
+.Menus:hover:before {
+    display: inline;
+    opacity: 1;
+
+}
+
+.MenuFrame {
+    vertical-align: top;
+    
+    margin-top:20px;
+    overflow-y: scroll;
+    display: inline-block;
+    height:900px;
+    width:35%
+}
+

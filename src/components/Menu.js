@@ -6,7 +6,7 @@ import './Menu.css';
 const Menu = ({onCreate,url,idx}) => {
     return (
         <div className="Menus">
-            <img src={url} alt='없당' onClick={()=>onCreate(idx)}></img>
+            <img className='menuImage' src={url} alt='없당' onClick={()=>onCreate(idx)}></img>
         </div>
     )
 }

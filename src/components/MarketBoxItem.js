@@ -1,21 +1,47 @@
 import React from 'react';
+import './Menu.css'
 
 
-let imgstyle = {
-    height: '200px'
+const boxFrame = {
+    width: '50%',
+    height: '400px',
+    display: 'inline-block'
 }
-let spanstyle = {
-    position: 'absolute',
-    left : '0px'
+const boxImage = {
+    height: '75%',
+    width: '100%'
+}
+const boxBottom = {
+    width: '49%',
+    display: 'inline-block',
+    textAlign: 'center',
+    fontWeight: 'bold'
+}
+const countBox = {
+    width: '100%',
+    textAlign: 'center',
+    color: 'blue',
+    fontWeight: 'bold'
+
 }
 
-const MarketBoxItem = ({ idx,count,onIncrement,onDecrement }) => {
-    const url = './'+idx+'.jpg';
+
+
+
+const MarketBoxItem = ({ idx, count, onIncrement, onDecrement,onDelete }) => {
+    const url = './' + idx + '.jpg';
     return (
-        <div>
-            <img src={url} alt='메뉴' style={imgstyle}/>
-            <span style={spanstyle}>{count}</span>
-            
+        <div style={boxFrame}>
+            <div style={boxImage}>
+                <img src={url} alt='메뉴' />
+            </div>
+            <input type='Button' style={boxBottom} value='+' onClick={() => onIncrement(idx)} />
+            <input type='Button' style={boxBottom} value='-' onClick={() => onDecrement(idx)} />
+            <input type='Button' style={{...boxBottom,width:'70%'}} value='삭제' onClick={() => onDelete(idx)} />
+            <div style={countBox}>
+                {count}
+            </div>
+
         </div>
 
     )
