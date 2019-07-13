@@ -1,0 +1,8 @@
+.Menus {
+    cursor: pointer;
+    display: inline-block;
+    margin:5px;
+}
+.Menus:hover {
+    opacity: 0.85;
+}
