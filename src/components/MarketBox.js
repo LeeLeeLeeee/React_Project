@@ -43,7 +43,7 @@ const MarketBox = ({ menuList, StoreList, onIncrement, onDecrement, onDelete, on
     if (menuListJSX === '') {
         return (
             <Fragment>
-                {StoreListJSX}
+                
             <div>
                 {menuListJSX}
             </div>
@@ -52,7 +52,7 @@ const MarketBox = ({ menuList, StoreList, onIncrement, onDecrement, onDelete, on
     } else {
         return (
             <Fragment>
-                {StoreListJSX}
+                
                 <input type='Button' style={{ width: '200px', marginTop: '20px', diplay: 'inline-block', marginBottom: '20px' }} value='주문하기' onClick={() => { onOrder() }} />
                 <div>
                     {menuListJSX}

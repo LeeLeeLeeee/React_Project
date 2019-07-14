@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MenuListContainer from './MenuListContainer'
 import MarketBox from './MarketBoxContainer'
+import StoreBox from './StoreBoxContainer'
 import '../components/Menu.css'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
@@ -31,7 +32,7 @@ function toVisitor() {
 function toMaster() {
     return (
         <div className="App">
-            
+            <StoreBox />
         </div>
     )
 }
