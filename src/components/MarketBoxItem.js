@@ -31,6 +31,7 @@ const countBox = {
 const MarketBoxItem = ({ idx, count, onIncrement, onDecrement,onDelete }) => {
     const url = './' + idx + '.jpg';
     return (
+        
         <div style={boxFrame}>
             <div style={boxImage}>
                 <img src={url} alt='메뉴' />

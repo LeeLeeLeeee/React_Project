@@ -1,16 +1,18 @@
 import MarketBox from '../components/MarketBox'
 import { connect } from 'react-redux';
-import * as actions from '../actions';
+import * as actions from '../modules';
 
 const mapStateToProps = (state) => ({
-    menuList : state.get('menuList')
+    menuList : state.get('menuList'),
+    StoreList : state.get('MenuStore')
 })
 
 let mapDispatchToProps = (dispatch) => {
     return {
     onIncrement:(idx) => dispatch(actions.increment(idx)),
     onDecrement:(idx) => dispatch(actions.decrement(idx)),
-    onDelete:(idx)=> dispatch(actions.deletes(idx))
+    onDelete:(idx)=> dispatch(actions.deletes(idx)),
+    onOrder:() => dispatch(actions.orderMenu())
     }
 }
 

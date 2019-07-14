@@ -1,39 +1,66 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import './MarketBox.css';
 import MarketBoxItem from './MarketBoxItem'
+import StoreBoxItem from './StoreBoxItem'
 
-
-const MarketBox = ({ onIncrement, onDecrement, menuList,onDelete }) => {
+const MarketBox = ({ menuList, StoreList, onIncrement, onDecrement, onDelete, onOrder }) => {
     let menuListJSX = '';
     let Arrays = [];
-    console.log(menuList)
     let menuListJson = menuList.toJS();
+    let StoreListJSX ='';
+    if(StoreList.size > 0) {
+         StoreListJSX = StoreList.map(
+            (Store, i) => (
+                <StoreBoxItem
+                orderNum={i}
+                    Store = {Store.toJS()}
+                />
+            )
+        )
+    }
+
+
 
     if (menuList.size === 0) {
-        menuListJSX = 'Nothing';
+        menuListJSX = '';
     } else {
+
         for (let obj in menuListJson) {
             Arrays.push(
                 <MarketBoxItem
-                        idx = {obj}
-                        count = {menuListJson[obj]['count']}
-                        onIncrement = {onIncrement}
-                        onDecrement = {onDecrement}
-                        onDelete = {onDelete}
-                    />
-                );
+                    idx={obj}
+                    count={menuListJson[obj]['count']}
+                    onIncrement={onIncrement}
+                    onDecrement={onDecrement}
+                    onDelete={onDelete}
+                />
+            );
+
         }
         menuListJSX = Arrays;
 
     }
+    if (menuListJSX === '') {
+        return (
+            <Fragment>
+                {StoreListJSX}
+            <div>
+                {menuListJSX}
+            </div>
+            </Fragment>
+        )
+    } else {
+        return (
+            <Fragment>
+                {StoreListJSX}
+                <input type='Button' style={{ width: '200px', marginTop: '20px', diplay: 'inline-block', marginBottom: '20px' }} value='주문하기' onClick={() => { onOrder() }} />
+                <div>
+                    {menuListJSX}
+                </div>
+            </Fragment>
+        )
+    }
 
-
-    
-    return (
-        <div>
-            {menuListJSX}
-        </div>
-    )
 }
 
 

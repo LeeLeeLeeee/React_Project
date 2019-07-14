@@ -42,3 +42,10 @@
     width:35%
 }
 
+.StoreList {
+    display: fixed;
+    left:20px;
+    top:20px;
+    border:1px solid black;
+    background-color: #f4f8fd;
+}

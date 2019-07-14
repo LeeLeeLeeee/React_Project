@@ -1,14 +1,15 @@
-import MenuList from '../components/MenuList'
+import MenuList from '../components/MenuList';
 import { connect } from 'react-redux';
-import * as actions from '../actions';
+import * as actions from '../modules';
 
 const mapStateToProps = (state) => ({
-    menuList : state.get('menuList')
+    menuList : state.get('menuList'),
+    StoreList : state.get('MenuStore')
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    onCreate:(idx) => dispatch(actions.create(idx)),
-    onOrder:() => dispatch(actions.orderMenu())
+    onCreate:(idx) => dispatch(actions.create(idx))
+    
 })
 
 const MenuListContainer = connect(

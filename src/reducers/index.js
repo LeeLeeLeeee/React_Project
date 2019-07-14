@@ -1,16 +1,19 @@
 import * as types from '../actions/ActionTypes'
-import {Map} from 'immutable'
+import {Map,List} from 'immutable'
 
 const initialState = Map({
     menuList: Map({
 
-    })
+    }),
+    MenuStore: List([
+       
+    ])
 })
 
-function order(state = initialState,action) {
-    
+
+
+function order(state=initialState,action) {
     //const Template = Map( [[idx , Map({count:0})]] );
-    
     switch(action.type) {
         case types.INCREMENT:
             return state.setIn(['menuList',action.id,'count'], parseInt(state.getIn(['menuList',action.id,'count'])) + 1);
@@ -26,6 +29,7 @@ function order(state = initialState,action) {
             
            
         case types.CREATE:
+            
             if( state.hasIn(['menuList',action.id]) ) {
                 alert('이미 장바구니에 있는 메뉴입니다');
                 return state
@@ -42,8 +46,10 @@ function order(state = initialState,action) {
             
         case types.ORDER_MENU:
                 if(window.confirm('장바구니에 있는 메뉴로 주문하시겠습니까?')) {
-                    alert('주문이 완료되었습니다');
-                    return state.get('menuList').clear();
+                    alert('주문이 완료되었습니다!');
+                    state = state.set('MenuStore',state.get('MenuStore').push(state.get('menuList')));
+                    //state = state.get('menuList').clear();
+                    return state.set('menuList',Map({}))
                 } else {
                     return state
                 }
