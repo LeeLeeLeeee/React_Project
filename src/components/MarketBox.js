@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import './MarketBox.css';
 import MarketBoxItem from './MarketBoxItem'
-import StoreBoxItem from './StoreBoxItem'
+
 
 const MarketBox = ({ menuList, StoreList, onIncrement, onDecrement, onDelete, onOrder }) => {
     let menuListJSX = '';

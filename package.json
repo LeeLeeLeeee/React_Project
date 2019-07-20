@@ -18,8 +18,11 @@
     "axios": "^0.19.0",
     "body-parser": "^1.19.0"
   },
+  "proxy": "http://localhost:5000",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm-run-all --parallel start:**",
+    "start:client": "react-scripts start",
+    "start:server": "nodemon ./server/app.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

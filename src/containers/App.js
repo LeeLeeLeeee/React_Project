@@ -11,6 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 
+
 const useStyle = makeStyles(theme => ({
     root: {
         width: '100%',
@@ -58,8 +59,34 @@ function toMaster() {
 
 
 class App extends Component {
-    render() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            test  : ''
+        }
 
+    }
+
+    
+  callApi = async () => {
+
+    const response = await fetch('/api/customers');
+
+    const body = await response.json();
+
+    return body;
+
+  }
+  componentDidMount() {
+      this.callApi()
+            .then(res => this.setState({test:res}))
+            .catch(err => console.log(err));
+
+    console.log(this.state.test);
+  }
+
+    render() {
+       
         return (
             <Router>
                 <Container fixed>

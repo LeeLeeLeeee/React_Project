@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import './Menu.css'
 
 const storebox = {
-    width : '30%',
+    width : '100%',
     height : '300px',
     display : 'inline-block',
     border : '1px solid black',
@@ -16,7 +16,6 @@ const storebox = {
 
 const StoreBoxItem = ({ Store, orderNum }) => {
     let Arrays=[];
-    console.log(Store)
     for (let obj in Store) {
         if(obj !== 'order_time') {
             Arrays.push(
@@ -29,8 +28,8 @@ const StoreBoxItem = ({ Store, orderNum }) => {
                 </div>
             );
         }
-
     }
+    
     const StoreJSX = Arrays;
 
     return (
