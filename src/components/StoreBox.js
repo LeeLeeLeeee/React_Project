@@ -22,7 +22,7 @@ const StoreBox = ({ StoreList }) => {
         )
     } else {
         return (
-            <div>
+            <div className='StoreListBox'>
                 {StoreListJSX}
             </div>
         )

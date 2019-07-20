@@ -12,7 +12,7 @@ let mapDispatchToProps = (dispatch) => {
     onIncrement:(idx) => dispatch(actions.increment(idx)),
     onDecrement:(idx) => dispatch(actions.decrement(idx)),
     onDelete:(idx)=> dispatch(actions.deletes(idx)),
-    onOrder:() => dispatch(actions.orderMenu())
+    onOrder:(idx) => dispatch(actions.orderMenu(idx))
     }
 }
 

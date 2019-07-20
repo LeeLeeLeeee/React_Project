@@ -7,17 +7,6 @@ const MarketBox = ({ menuList, StoreList, onIncrement, onDecrement, onDelete, on
     let menuListJSX = '';
     let Arrays = [];
     let menuListJson = menuList.toJS();
-    let StoreListJSX ='';
-    if(StoreList.size > 0) {
-         StoreListJSX = StoreList.map(
-            (Store, i) => (
-                <StoreBoxItem
-                orderNum={i}
-                    Store = {Store.toJS()}
-                />
-            )
-        )
-    }
 
 
 
@@ -53,7 +42,7 @@ const MarketBox = ({ menuList, StoreList, onIncrement, onDecrement, onDelete, on
         return (
             <Fragment>
                 
-                <input type='Button' style={{ width: '200px', marginTop: '20px', diplay: 'inline-block', marginBottom: '20px' }} value='주문하기' onClick={() => { onOrder() }} />
+                <input type='Button' style={{ width: '200px', marginTop: '20px', diplay: 'inline-block', marginBottom: '20px' }} value='주문하기' onClick={() => { onOrder(); }} />
                 <div>
                     {menuListJSX}
                 </div>

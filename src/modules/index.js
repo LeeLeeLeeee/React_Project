@@ -33,7 +33,6 @@ export const orderMenu   = createAction(ORDER_MENU); // Nothing
 
 export default handleActions({
     [CREATE] : (state,action) => {
-        console.log(action.payload);
         if( state.hasIn(['menuList',action.payload]) ) {
             alert('이미 장바구니에 있는 메뉴입니다');
             return state
@@ -41,7 +40,6 @@ export default handleActions({
             return state.setIn(['menuList',action.payload],Map({count:1}));
         }
     },
-
     [DELETE] : (state,action) => {
         if(window.confirm('해당 메뉴를 삭제하시겠습니까?')) {
             return state.deleteIn(['menuList',action.payload]);
@@ -62,9 +60,14 @@ export default handleActions({
         }
     },
     [ORDER_MENU] : (state,action) => {
+        let realTime = new Date();
+        let nowTime = realTime.getHours() +' 시 '+ realTime.getMinutes() + ' 분' + realTime.getSeconds() + '초' ;
         if(window.confirm('장바구니에 있는 메뉴로 주문하시겠습니까?')) {
             alert('주문이 완료되었습니다!');
-            state = state.set('MenuStore',state.get('MenuStore').push(state.get('menuList')));
+            state = state.setIn(['menuList','order_time'],nowTime);
+            state = state.set('MenuStore',state.get('MenuStore').push(
+                state.get('menuList')
+                ));
             //state = state.get('menuList').clear();
             return state.set('menuList',Map({}))
         } else {

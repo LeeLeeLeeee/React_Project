@@ -1,23 +1,47 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import './Menu.css'
 
+const storebox = {
+    width : '30%',
+    height : '300px',
+    display : 'inline-block',
+    border : '1px solid black',
+    boxSizing:'border-box',
+    margin:'5px',
+    padding : '10px',
+    verticalAlign : 'top',
+    position:'relative'
+}
 
 
 const StoreBoxItem = ({ Store, orderNum }) => {
     let Arrays=[];
-    
+    console.log(Store)
     for (let obj in Store) {
-        Arrays.push(
-            <div> 주문[{orderNum+1}] : {obj} - {Store[obj]['count']}개 </div>
-        );
+        if(obj !== 'order_time') {
+            Arrays.push(
+                <b> 주문[{orderNum+1}] : {obj} - {Store[obj]['count']}개<br /> </b>
+            );
+        } else {
+            Arrays.push(
+                <div style={{bottom:'1px',position:'absolute'}}>
+                    <small> 주문시간 : {Store[obj]}<br /> </small>
+                </div>
+            );
+        }
 
     }
     const StoreJSX = Arrays;
 
     return (
-       <div className="StoreList">
+        <div style={storebox}> 
+            
+            <h3>주문서 - {orderNum+1}</h3>
            {StoreJSX}
-       </div>
+           
+        </div>
+        
+       
     )
     
 }
