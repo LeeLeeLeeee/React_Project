@@ -71,17 +71,22 @@ class App extends Component {
   callApi = async () => {
 
     const response = await fetch('/api/customers');
+    if(response !== null) {
+        const body = await response.json();
+        console.log(body)
+        return body;
+    } else {
+        return 'Nothing';
+    }
+    
 
-    const body = await response.json();
-
-    return body;
+    
 
   }
   componentDidMount() {
       this.callApi()
             .then(res => this.setState({test:res}))
             .catch(err => console.log(err));
-
     console.log(this.state.test);
   }
 

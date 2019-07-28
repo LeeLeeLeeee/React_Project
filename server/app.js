@@ -42,8 +42,13 @@ app.get('/api/customers', (req, res) => {
         'SELECT * FROM menus ',
 
         (err, rows, fields) => {
+            if(err === null) {
+                res.send(rows);
+            } else {
+                console.log(err);
 
-            res.send('rows');
+            }
+            
 
         }
     )
