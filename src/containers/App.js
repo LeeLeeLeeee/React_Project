@@ -35,8 +35,6 @@ function Home() {
 
 function toVisitor() {
     return (
-
-
         <Grid className="App" container sppacing={2}>        
             <Grid item xs={6}>
                 <h3>메뉴판</h3>

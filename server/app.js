@@ -35,6 +35,9 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
+app.get('/',function(req,res) {
+    res.send('Hello World');
+})
 
 app.get('/api/customers', (req, res) => {
     connection.query(
@@ -42,8 +45,8 @@ app.get('/api/customers', (req, res) => {
         'SELECT * FROM menus ',
 
         (err, rows, fields) => {
-
-            res.send('rows');
+            console.log(rows)
+            res.send(rows);
 
         }
     )
