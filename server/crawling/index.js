@@ -1,54 +1,4 @@
-
-const waitFind = (locator) => {
-  return driver.findElement(async () => {
-    await driver.wait(until.elementLocated(locator));
-    return driver.findElement(locator);
-  });
-}
-/*
-var webdriver = require('../../node_modules/selenium-webdriver'),
-    By = webdriver.By,
-    until = webdriver.until;
-*/
-/*
-const {Builder, By, Key, until} = require('selenium-webdriver');
-(async function Insta() {
-  let driver = await new Builder().forBrowser('chrome').build();
-  var request = require('request');
-
-  try {
-    await driver.get('https://www.instagram.com/?hl=ko');
-    var LoginBtn = await driver.wait(until.elementLocated(By.xpath('//*[@id="react-root"]/section/main/article/div[2]/div[2]/p/a')));
-    await LoginBtn.click();
-    await driver.wait(until.titleIs('로그인 • Instagram'));
-
-    var idInput = await driver.wait(until.elementLocated(By.name('username')));
-    var pwInput = await driver.wait(until.elementLocated(By.name('password')));
-    await idInput.sendKeys('ijj1792@naver.com')
-    await pwInput.sendKeys('angks12')
-    LoginBtn = await driver.wait(until.elementLocated(By.xpath('//*[@id="react-root"]/section/main/div/article/div/div[1]/div/form/div[4]/button/div')),1000);
-    await LoginBtn.click();
-
-    var LaterBtn = await driver.wait(until.elementLocated(By.className('aOOlW   HoLwm ')));
-    await LaterBtn.click();
-
-    var findInput = await driver.wait(until.elementLocated(By.className('XTCLo x3qfX')));
-    await findInput.sendKeys('강남역 맛집', Key.RETURN);
-    var keywordArray = []
-    var tempVar
-    for(var i=1; i < 5;i++) {
-      
-      tempVar = await driver.wait(until.elementLocated(By.xpath('//*[@id="react-root"]/section/nav/div[2]/div/div/div[2]/div[2]/div[2]/div/a['+i+']/div/div/div[1]/span')),1000)
-      await tempVar.getText().then(text =>{
-        console.log(text);
-      })
-    }
-    
-  } finally {
-   //request("http://sjh836.tistory.com", function(err, res, body) { console.log(body); });
-  }
-})();
-*/
+var moduleCrawl = require('./util/custom');
 /*
 const mysql = require('mysql');
 const fs = require('fs');
@@ -70,76 +20,114 @@ const connection = mysql.createConnection({
 });
 connection.connect();
 */
-const { Builder, By, Key, until } = require('selenium-webdriver');
+let subPageArray = [3,4,5,6,7];
+let MainPageArray = [1,2,3];
+let SubWayName = [];
+let prevName = "";
+let t = 0;
+
 (async function example() {
+  const { Builder, By, Key, until } = require('selenium-webdriver');
   let driver = await new Builder().forBrowser('chrome').build();
   try {
-    let PBtn, tempA;
     await driver.get('https://map.naver.com/?query=%EC%84%9C%EC%9A%B8+%EC%A7%80%ED%95%98%EC%B2%A0+%EC%97%AD&type=SITE_1&queryRank=0');
-    //tempA = await driver.wait(until.elementLocated(By.className('lsnx_det')));
-
-
-    for (var ti = 1; ti < 6; ti++) {
-      for (var i = 3; i < 8; i++) {
-        tempA = await By.css('.lsnx_det dt > a');
-        console.log('#####################'+i+'###########################')
-        await driver.wait(until.elementsLocated(tempA));
-        let whatTempA = driver.findElements(tempA);
-        await whatTempA.then(async (elements) => {
-          for (var property in elements) {
-            elements[property].getText().then(text => {
-              console.log(text)
-            });
-          }
-          await elements.clear();
-        });
-        PBtn = await driver.wait(until.elementLocated(By.xpath('//*[@id="panel"]/div[2]/div[1]/div[2]/div[2]/div/div/*[' + i + ']')), 1100);
-        await PBtn.click();
-        
-      }
-    }
-
-
-    /*
-    for (var ti = 1; ti < 6; ti++) {
-      for (var i = 3; i < 8; i++) {
-        for (var t = 1; t < 11; t++) {
-          tempA = await driver.wait(until.elementLocated(By.xpath('//*[@id="panel"]/div[2]/div[1]/div[2]/div[2]/ul/li[' + t + ']/div[1]/dl/dt/a')), 100);
-          await tempA.getText().then(text => {
-            console.log(text);
-          }).catch(err => {
-            console.log(err);
-          })
-        }
-        PBtn = await driver.wait(until.elementLocated(By.xpath('//*[@id="panel"]/div[2]/div[1]/div[2]/div[2]/div/div/*[' + i + ']')), 1100);
-        await PBtn.click();
-      }
-    }
-    */
-
+    await toMainPage({By, Key, until, driver});
 
   } finally {
-    //await driver.quit();
+    console.log(SubWayName);
   }
 })();
 
+async function toMainPage(Tools) {
+  for(const item of MainPageArray) {
+      await toSubPage(Tools);
+  }
+}
 
+async function toSubPage(Tools) {
+  for(const item of subPageArray) {
+    await Locate(Tools,item);
+  }
+  return  new Promise((resolve)=>{
+    resolve('success');
+  })
+}
+
+async function Locate(Tools,i) {  
+  if( i%7 === 0 ) t += 1;
+  let NextpageNum;
+  let iCnt = 0;
+  await moduleCrawl.thisPage(i,t).then(page=>{NextpageNum = page});
+
+  /*
+    await을 붙여주면 promise pending이 끝난 Element를 반환한다.
+    즉 then을 쓸 수 없었다.
+   */
+    const SubwayElement = await moduleCrawl.webElementLocated(Tools,'css','.lsnx_det dt > a',true);
+    for(const item of SubwayElement) {
+      if(iCnt == 0) {
+        item.getText().then(text=>prevName=text);
+        iCnt++;
+      }
+      await item.getText().then(text=>SubWayName.push(text.split(" ")[0]));
+    }
+    const PBtn = await moduleCrawl.webElementLocated(Tools,'xpath','//*[@id="panel"]/div[2]/div[1]/div[2]/div[2]/div/div/*[' + i + ']',false);    
+    await PBtn.click();
+    let whileStatus = true
+    let tCnt = 0
+    while(whileStatus) {
+      moduleCrawl.WaitPageReload(Tools,'xpath','//*[@id="panel"]/div[2]/div[1]/div[2]/div[2]/ul/li[1]/div[1]/dl/dt/a',prevName)
+      .then(()=>{
+        whileStatus = false;
+      }).catch((err)=>{
+          whileStatus = true;
+      })
+      await Tools.driver.sleep(10);
+    }
+
+      
+
+    
+    
+
+
+  
 /*
-var webdriver = require('../../node_modules/selenium-webdriver');
-(async function example() {
-  var driver = new webdriver.Builder().forBrowser('chrome').build();
-  try {
-    await driver.get('https://www.instagram.com/?hl=ko');
-    //var element = await driver.wait(webdriver.until.elementLocated(webdriver.By.name('q')));
-    //await element.sendKeys('Cheese!', webdriver.Key.RETURN);
-    await driver.getTitle().then(function (title) {
-      console.log('Page title is: ' + title);
+  Tools.driver.sleep(700).then(async ()=> {
+    const MatchPage = await moduleCrawl.webElementLocated(Tools,'xpath','//*[@id="panel"]/div[2]/div[1]/div[2]/div[2]/div/div/*[' + i + ']',false);
+    await Tools.driver.wait(Tools.until.elementTextIs(MatchPage,String(NextpageNum)),10000).then(()=>{
     });
-    await driver.wait(webdriver.until.elementLocated(By.xpath('//*[@id="react-root"]/section/main/article/div[2]/div[2]/p/a'))).click();
-
-  } finally {
-//    await driver.quit();
-  }
-})();
+  });
 */
+  return  new Promise(resolve=>{
+    resolve('Success');
+  }) ;
+}
+
+  //await Tools.driver.sleep(700).then(
+  //  await moduleCrawl.webElementLocated(Tools,'xpath','//*[@id="panel"]/div[2]/div[1]/div[2]/div[2]/div/div/*[' + i + ']',false).then(async element=>{
+  //    await Tools.driver.wait(Tools.until.elementTextIs(element[0],String(NextpageNum)),1000);
+  //  }).catch(err=>{
+  //    console.log('err2');
+  //  })
+  //)    
+  //const SubwayElement = moduleCrawl.webElementLocated(Tools,'css',".lsnx_det dt > a");
+  //SubwayElement
+  //  .then(async element=> {
+  //      for(const item of element) {
+  //        
+  //          await item.getText().then(text=>SubWayName.push(text.split(" ")[0]));
+  //      }
+  //  }).catch(err=>{
+  //    console.log('err1');
+  //  });
+
+ // PBtn = await Tools.driver.wait(Tools.until.elementLocated(Tools.By.xpath('//*[@id="panel"]/div[2]/div[1]/div[2]/div[2]/div/div/*[' + i + ']')));
+ // await PBtn.click();
+
+
+
+
+
+
 
